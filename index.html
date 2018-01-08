@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+
+  <title>nonKarstic</title>
+</head>
+<style type="text/css">
+  html,
+  body {
+    height: auto;
+    min-height: auto;
+  }
+
+  .modal-dialog.full-screen {
+    position: absolute;
+    width: auto;
+    margin-block-start: auto;
+    left: 0px;
+    right: 0px;
+    top: 100px;
+    bottom: 0px;
+  }
+
+  .modal-dialog.full-screen .modal-content {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    top: 10px;
+    bottom: 10px;
+  }
+
+</style>
+
+<body>
+
+  <div class="ui inverted vertical masthead center aligned segment">
+
+    <div class="ui container">
+      <div class="ui large secondary inverted pointing menu">
+        <a class="brand" href="#">
+          <img src="logo.png" alt="logo" style="width:50px">
+        </a>
+        <a class="active item" href="index.html">NonKarstic</a>
+        <a class="item" href="terkep.html">Térkép</a>
+        <a class="item" href=rolunk.html>Rólunk</a>
+        <div class="right item">
+          <a class="ui inverted button" href="admin.html\login">Belépés</a>
+          <a class="ui inverted button" href="admin.html\logout">Kilépés</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="app1" class="ui vertical stripe segment">
+    <div class="ui container">
+      <div id="content" class="ui basic segment">
+        <h2 class="ui header">Nemkarsztos barlangok listája</h2>
+        <div class="ui grid">
+          <div class="ui left aligned nine wide column">
+            <div class="ui labeled icon input">
+              <div class="ui label">Keresés:</div>
+              <input v-model="searchFor" class="ui input" @keyup.enter="setFilter">
+            </div>
+            <button class="ui button primary" @click="setFilter">
+              <i class="search icon"></i>
+            </button>
+            <button class="ui button" @click="resetFilter">Feltételek törlése</button>
+            &nbsp;
+          </div>
+          <div class="ui right aligned seven wide column">
+            <button class="ui basic button" id="settingsBtn" href="#mymodal" >
+              <i class="setting icon"></i>
+            </button>
+          </div>
+        </div>
+
+<!-- MODAL -->
+<div class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="myModal">
+  <div class="modal-dialog" style="overflow-y: scroll; max-height:85%;  margin-top: 200px; margin-bottom:50px;">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h3 class="modal-title">Beállítások</h3>
+      </div>
+      <div class="modal-body">
+        <div class="content ui form">
+          <div class="field">
+            <div class="ui checkbox">
+              <input type="checkbox" v-model="multiSort">
+              <label>Rendezés (use Alt+Click)</label>
+            </div>
+          </div>
+          <div class="ui divider"></div>
+          <div class="field">
+            <label>Oldalanként</label>
+            <select class="ui simple dropdown" v-model="perPage">
+              <option value=10>10</option>
+              <option value=15>15</option>
+              <option value=20>20</option>
+              <option value=25>25</option>
+            </select>
+          </div>
+          <div class="ui fluid card">
+            <div class="content">
+              <div v-for="field in fields" class="field">
+                <div class="ui checkbox">
+                  <input type="checkbox" v-model="field.visible">
+                  <label>{{ field.title == '' ? field.name.replace('__', '') : field.title | capitalize}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="actions">
+          <div class="ui cancel button">Vissza</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+        <div id="app">
+          <div id="table-wrapper" class="ui container">
+            <vuetable ref="vuetable" api-url="https://vuetable.ratiw.net/api/users" :fields="fields" :sort-order="sortOrder" :css="css.table"
+              pagination-path="" :per-page="3" @vuetable:pagination-data="onPaginationData" @vuetable:loading="onLoading" @vuetable:loaded="onLoaded">
+              <template slot="actions" scope="props">
+                <div class="table-button-container">
+                  <button class="btn btn-warning btn-sm" @click="editRow(props.rowData)">
+                    <span class="glyphicon glyphicon-pencil"></span></button>&nbsp;&nbsp;
+                  <button class="btn btn-danger btn-sm" @click="deleteRow(props.rowData)">
+                    <span class="glyphicon glyphicon-trash"></span></button>&nbsp;&nbsp;
+                </div>
+              </template>
+            </vuetable>
+            <vuetable-pagination ref="pagination" :css="css.pagination" @vuetable-pagination:change-page="onChangePage"></vuetable-pagination>
+          </div>
+        </div>
+        <script src='https://code.jquery.com/jquery-3.1.1.min.js'></script>
+        <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js'></script>
+        <script src='https://rawgit.com/ratiw/vuetable-2/master/dist/vuetable-2.js'></script>
+        <script src="js/index.js"></script>
+
+</body>
+</html>
+
+
