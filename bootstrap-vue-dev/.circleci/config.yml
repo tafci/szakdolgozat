@@ -1,0 +1,46 @@
+version: 2
+jobs:
+  build:
+    working_directory: /usr/src/app
+    docker:
+      - image: banian/node
+    steps:
+      # Checkout repository
+      - checkout
+
+      # Restore cache
+      - restore_cache:
+          key: yarn-{{ checksum "yarn.lock" }}
+
+      # Install dependencies
+      - run:
+          name: Install Dependencies
+          command: NODE_ENV=dev yarn
+
+      # Keep cache
+      - save_cache:
+          key: yarn-{{ checksum "yarn.lock" }}
+          paths:
+            - "node_modules"
+
+      # Build
+      - run:
+          name: Build
+          command: |
+            mkdir -p dist
+            yarn build
+
+      # Test
+      - run:
+          name: Tests
+          command: yarn test -- --maxWorkers=2 && yarn codecov
+
+      # Publish Docs
+      - deploy:
+          name: Publish Docs
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              git config --global user.email vuebootstrap@gmail.com
+              git config --global user.name BootstrapVue
+              yarn docs-gen && yarn docs-publish
+            fi

@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
   <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css">
@@ -82,76 +83,154 @@
         </div>
       </div>
 
-<!-- MODAL -->
-<div class="modal" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModal" aria-hidden="true">
-  <div class="modal-dialog" role="document" style="overflow-y: scroll; max-height:85%;  margin-top: 200px; margin-bottom:50px;">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">Beállítások</h3>
-      </div>
-      <div class="modal-body">
-        <div class="content ui form">
-          <div class="field">
-            <div class="ui checkbox">
-              <input type="checkbox" v-model="multiSort">
-              <label>Rendezés (use Alt+Click)</label>
+      <!-- MODAL -->
+      <div class="modal" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModal" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="overflow-y: scroll; max-height:85%;  margin-top: 200px; margin-bottom:50px;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title">Beállítások</h3>
             </div>
-          </div>
-          <div class="ui divider"></div>
-          <div class="field">
-            <label>Oldalanként</label>
-            <select class="ui simple dropdown" v-model="perPage">
-              <option value=10>10</option>
-              <option value=15>15</option>
-              <option value=20>20</option>
-              <option value=25>25</option>
-            </select>
-          </div>
-          <div class="ui fluid card">
-            <div class="content">
-              <div v-for="field in fields" class="field">
-                <div class="ui checkbox">
-                  <input type="checkbox" v-model="field.visible">
-                  <label>{{ field.title == '' ? field.name.replace('__', '') : field.title | capitalize}}</label>
+            <div class="modal-body">
+              <div class="content ui form">
+                <div class="field">
+                  <div class="ui checkbox">
+                    <input type="checkbox" v-model="multiSort">
+                    <label>Rendezés (use Alt+Click)</label>
+                  </div>
                 </div>
+                <div class="ui divider"></div>
+                <div class="field">
+                  <label>Oldalanként</label>
+                  <select class="ui simple dropdown" v-model="perPage">
+                    <option value=10>10</option>
+                    <option value=15>15</option>
+                    <option value=20>20</option>
+                    <option value=25>25</option>
+                  </select>
+                </div>
+                <div class="ui fluid card">
+                  <div class="content">
+                    <div v-for="field in fields" class="field">
+                      <div class="ui checkbox">
+                        <input type="checkbox" v-model="field.visible">
+                        <label>{{ field.title == '' ? field.name.replace('__', '') : field.title | capitalize}}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <div class="actions">
+                <button type="button" class="btn btn-primary">OK</button>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="modal-footer">
-        <div class="actions">
-        <button type="button" class="btn btn-primary">OK</button>
+
+
+      <div id="app">
+        <div id="table-wrapper" class="ui container">
+          <vuetable ref="vuetable" api-url="https://vuetable.ratiw.net/api/users" :fields="fields" :sort-order="sortOrder" :css="css.table"
+            pagination-path="" :per-page="3" @vuetable:pagination-data="onPaginationData" @vuetable:loading="onLoading" @vuetable:loaded="onLoaded">
+            <template slot="actions" scope="props">
+              <div class="table-button-container">
+                <button class="btn btn-warning btn-sm" @click="editRow(props.rowData)">
+                  <span class="glyphicon glyphicon-pencil"></span>
+                </button>&nbsp;&nbsp;
+                <button class="btn btn-danger btn-sm" @click="deleteRow(props.rowData)">
+                  <span class="glyphicon glyphicon-trash"></span>
+                </button>&nbsp;&nbsp;
+              </div>
+            </template>
+          </vuetable>
+          <vuetable-pagination ref="pagination" :css="css.pagination" @vuetable-pagination:change-page="onChangePage"></vuetable-pagination>
         </div>
       </div>
-    </div>
-  </div>
-</div>
 
+      <!--MODAL adatlap -->
 
-        <div id="app">
-          <div id="table-wrapper" class="ui container">
-            <vuetable ref="vuetable" api-url="https://vuetable.ratiw.net/api/users" :fields="fields" :sort-order="sortOrder" :css="css.table"
-              pagination-path="" :per-page="3" @vuetable:pagination-data="onPaginationData" @vuetable:loading="onLoading" @vuetable:loaded="onLoaded">
-              <template slot="actions" scope="props">
-                <div class="table-button-container">
-                  <button class="btn btn-warning btn-sm" @click="editRow(props.rowData)">
-                    <span class="glyphicon glyphicon-pencil"></span></button>&nbsp;&nbsp;
-                  <button class="btn btn-danger btn-sm" @click="deleteRow(props.rowData)">
-                    <span class="glyphicon glyphicon-trash"></span></button>&nbsp;&nbsp;
-                </div>
-              </template>
-            </vuetable>
-            <vuetable-pagination ref="pagination" :css="css.pagination" @vuetable-pagination:change-page="onChangePage"></vuetable-pagination>
+      <div>
+        <b-btn @click="show=true" variant="primary">Show Modal</b-btn>
+        <b-modal v-model="show" title="Modal Variants" :header-bg-variant="headerBgVariant" :header-text-variant="headerTextVariant"
+          :body-bg-variant="bodyBgVariant" :body-text-variant="bodyTextVariant" :footer-bg-variant="footerBgVariant" :footer-text-variant="footerTextVariant">
+          <b-container fluid>
+            <b-row class="mb-1 text-center">
+              <b-col cols="3"> </b-col>
+              <b-col>Background</b-col>
+              <b-col>Text</b-col>
+            </b-row>
+            <b-row class="mb-1">
+              <b-col cols="3">Header</b-col>
+              <b-col>
+                <b-form-select :options="variants" v-model="headerBgVariant" /></b-col>
+              <b-col>
+                <b-form-select :options="variants" v-model="headerTextVariant" /></b-col>
+            </b-row>
+            <b-row class="mb-1">
+              <b-col cols="3">Body</b-col>
+              <b-col>
+                <b-form-select :options="variants" v-model="bodyBgVariant" /></b-col>
+              <b-col>
+                <b-form-select :options="variants" v-model="bodyTextVariant" /></b-col>
+            </b-row>
+            <b-row>
+              <b-col cols="3">Footer</b-col>
+              <b-col>
+                <b-form-select :options="variants" v-model="footerBgVariant" /></b-col>
+              <b-col>
+                <b-form-select :options="variants" v-model="footerTextVariant" /></b-col>
+            </b-row>
+          </b-container>
+          <div slot="modal-footer" class="w-100">
+            <p class="float-left">Modal Footer Content</p>
+            <b-btn size="sm" class="float-right" variant="primary" @click="show=false">
+              Close
+            </b-btn>
           </div>
-        </div>
-        <script src='https://code.jquery.com/jquery-3.1.1.min.js'></script>
-        <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js'></script>
-        <script src='https://rawgit.com/ratiw/vuetable-2/master/dist/vuetable-2.js'></script>
-        <script src="js/index.js"></script>
+        </b-modal>
+      </div>
+
+
+      <script>
+        // This imports
+        import {
+          Modal
+        } from 'bootstrap-vue/es/components';
+        Vue.use(Modal);
+
+        export default {
+          components: {
+            Modal
+          },
+
+          data() {
+            return {
+              show: false,
+              variants: [
+                'primary', 'secondary', 'success', 'warning', 'danger', 'info', 'light', 'dark'
+              ],
+              headerBgVariant: 'dark',
+              headerTextVariant: 'light',
+              bodyBgVariant: 'light',
+              bodyTextVariant: 'dark',
+              footerBgVariant: 'warning',
+              footerTextVariant: 'dark'
+            }
+          }
+        }
+
+      </script>
+
+      <!-- modal-variant-1.vue -->
+
+      <script src='https://code.jquery.com/jquery-3.1.1.min.js'></script>
+      <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js'></script>
+      <script src='https://rawgit.com/ratiw/vuetable-2/master/dist/vuetable-2.js'></script>
+      <script src="js/index.js"></script>
 
 </body>
+
 </html>
-
-
