@@ -34,7 +34,7 @@ new Vue({
         loadingClass: 'loading',
         ascendingIcon: 'glyphicon glyphicon-chevron-up',
         descendingIcon: 'glyphicon glyphicon-chevron-down',
-        handleIcon: 'glyphicon glyphicon-menu-hamburger',
+        handleIcon: 'glyphicon glyphicon-menu-hamburger'
       },
       pagination: {
         infoClass: 'pull-left',
@@ -47,7 +47,7 @@ new Vue({
           first: '',
           prev: '',
           next: '',
-          last: '',
+          last: ''
         },
       }
     }

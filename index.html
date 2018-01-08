@@ -51,7 +51,7 @@
         <a class="item" href="terkep.html">Térkép</a>
         <a class="item" href=rolunk.html>Rólunk</a>
         <div class="right item">
-          <a class="ui inverted button" href="admin.html\login">Belépés</a>
+          <a class="ui inverted button" href="login.html">Belépés</a>
           <a class="ui inverted button" href="admin.html\logout">Kilépés</a>
         </div>
       </div>
@@ -75,17 +75,17 @@
             &nbsp;
           </div>
           <div class="ui right aligned seven wide column">
-            <button class="ui basic button" id="settingsBtn" href="#mymodal" >
+            <button class="ui basic button" id="settingsBtn" data-toggle="modal" data-target="#settingsModal">
               <i class="setting icon"></i>
             </button>
           </div>
         </div>
+      </div>
 
 <!-- MODAL -->
-<div class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="myModal">
-  <div class="modal-dialog" style="overflow-y: scroll; max-height:85%;  margin-top: 200px; margin-bottom:50px;">
+<div class="modal" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModal" aria-hidden="true">
+  <div class="modal-dialog" role="document" style="overflow-y: scroll; max-height:85%;  margin-top: 200px; margin-bottom:50px;">
     <div class="modal-content">
-
       <div class="modal-header">
         <h3 class="modal-title">Beállítások</h3>
       </div>
@@ -121,13 +121,13 @@
       </div>
       <div class="modal-footer">
         <div class="actions">
-          <div class="ui cancel button">Vissza</div>
+        <button type="button" class="btn btn-primary">OK</button>
         </div>
       </div>
     </div>
   </div>
 </div>
-</div>
+
 
         <div id="app">
           <div id="table-wrapper" class="ui container">
