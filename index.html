@@ -151,6 +151,7 @@
 
       <!--MODAL adatlap -->
 
+<template>
       <div>
         <b-btn @click="show=true" variant="primary">Show Modal</b-btn>
         <b-modal v-model="show" title="Modal Variants" :header-bg-variant="headerBgVariant" :header-text-variant="headerTextVariant"
@@ -191,45 +192,40 @@
           </div>
         </b-modal>
       </div>
+</template>
 
 
       <script>
-        // This imports
-        import {
-          Modal
-        } from 'bootstrap-vue/es/components';
-        Vue.use(Modal);
+import bModal from 'bootstrap-vue/es/components/modal/modal';
+Vue.component('b-modal', bModal);
+  export default {
+    data() {
+      return {
+        show: false,
+        variants: [
+          'primary', 'secondary', 'success', 'warning', 'danger', 'info', 'light', 'dark'
+        ],
+        headerBgVariant: 'dark',
+        headerTextVariant: 'light',
+        bodyBgVariant: 'light',
+        bodyTextVariant: 'dark',
+        footerBgVariant: 'warning',
+        footerTextVariant: 'dark'
+      }
+    }
+  }
 
-        export default {
-          components: {
-            Modal
-          },
 
-          data() {
-            return {
-              show: false,
-              variants: [
-                'primary', 'secondary', 'success', 'warning', 'danger', 'info', 'light', 'dark'
-              ],
-              headerBgVariant: 'dark',
-              headerTextVariant: 'light',
-              bodyBgVariant: 'light',
-              bodyTextVariant: 'dark',
-              footerBgVariant: 'warning',
-              footerTextVariant: 'dark'
-            }
-          }
-        }
+</script>
 
-      </script>
-
-      <!-- modal-variant-1.vue -->
 
       <script src='https://code.jquery.com/jquery-3.1.1.min.js'></script>
       <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
       <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js'></script>
+      <script src='https://cdnjs.jsdelivr.net/npm/vue/2.1.10/vue.min.js'></script>
       <script src='https://rawgit.com/ratiw/vuetable-2/master/dist/vuetable-2.js'></script>
       <script src="js/index.js"></script>
+
 
 </body>
 
