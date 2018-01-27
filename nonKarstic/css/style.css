@@ -1,0 +1,31 @@
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
+}
+
+.orange.glyphicon {
+  color: orange;
+}
+
+th.sortable {
+  color: #ec971f;
+}
+.modal-dialog.full-screen {
+  position: absolute;
+  width: auto;
+  margin-block-start: auto;
+  left: 0px;
+  right: 0px;
+  top: 100px;
+  bottom: 0px;
+}
+
+.modal-dialog.full-screen .modal-content {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 10px;
+  bottom: 10px;
+}
