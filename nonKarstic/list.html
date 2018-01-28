@@ -196,16 +196,12 @@
           <template slot="actions" scope="props">
 
             <div id="bapp" class="table-button-container">
-              <button id="show-modal" class="btn btn-warning btn-sm" @click="editRow(props.rowData)">
-                <span class="glyphicon glyphicon-pencil"></span>
-              </button>&nbsp;&nbsp;
-              <button class="btn btn-success btn-sm" id="modifyBtn" data-toggle="modal" data-target="#modify">Open
-                Dialog
-              </button>
 
-              <button class="btn btn-danger btn-sm" @click="deleteRow(props.rowData)">
-                <span class="glyphicon glyphicon-trash"></span>
               </button>&nbsp;&nbsp;
+              <button class="btn btn-success btn-sm" id="modifyBtn" data-toggle="modal" data-target="#modify"><span
+                class="glyphicon glyphicon-pencil"></span></button>
+              <button class="btn btn-danger btn-sm" @click="deleteRow(props.rowData)"><span
+                class="glyphicon glyphicon-trash"></span></button>&nbsp;&nbsp;
             </div>
           </template>
         </vuetable>
@@ -220,108 +216,104 @@
 
 <!-- TÁBLÁZAT MODAL -->
 <div class="modal" id="modify" tabindex="-1" role="dialog" aria-labelledby="modify"
-     aria-hidden="true" style="overflow-y: scroll">
+     aria-hidden="true">
   <v-app id="inspire">
     <v-layout row justify-center>
-      <v-btn color="primary" dark @click.native.stop="dialog = true">Open Dialog</v-btn>
-      <v-dialog v-model="dialog" max-width="290">
+      <v-btn color="primary" dark @click.native.stop="dialog = true">Adatlap szerkesztése</v-btn>
+      <v-btn color="primary" @click.native.stop="dialog = false">Mégsem</v-btn>
+      <v-dialog v-model="dialog" persistent max-width="500px">
         <v-card>
-          <v-card-title class="headline">Use Google's location service?</v-card-title>
-          <v-card-text>Let Google help apps determine location. This means sending anonymous location data to Google,
-            even when no apps are running.
+          <v-card-title class="headline">XY barlang adatlapjának szerkesztése</v-card-title>
+          <v-card-text>Itt lehetőséged van módosítani a barlang adatait, frissíteni, vagy törölni.</v-card-text>
+          <v-card-text>
+            <v-container grid-list-md>
+              <v-layout wrap>
+                <v-flex xs12 sm6 md6>
+                  <v-text-field label="Barlang neve" required></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md6>
+                  <v-text-field label="Szinonimák" hint="a barlangra utaló egyéb elnevezések"></v-text-field>
+                </v-flex>
+                <v-flex xs12>
+                  <v-text-field label="Kataszteri szám" type="number" required></v-text-field>
+                </v-flex>
+                <v-flex xs12>
+                  <v-text-field label="Barlang hosszabb szöveges leírása" required></v-text-field>
+                </v-flex>
+                <v-flex xs12>
+                  <v-text-field label="Megjegyzés"></v-text-field>
+                </v-flex>
+                <v-flex xs12>
+                  <v-select
+                    label="Védettségi besorolás"
+                    required
+                    :items="['védett', 'fokozottan védett']"
+                  ></v-select>
+                </v-flex>
+                <v-flex xs12>
+                  <v-select
+                    label="Illetékes nemzeti park igazgatóság"
+                    required
+                    :items="['Balaton-felvidéki Nemzeti Park', 'Bükki Nemzeti Park', 'Aggteleki Nemzeti Park', 'Fertő-Hansági Nemzeti Park', 'Duna-Ipoly Nemzeti Park' ]"
+                  ></v-select>
+                </v-flex>
+                <v-flex xs12 sm6>
+                  <v-select
+                    label="Látogathatóság"
+                    multiple
+                    autocomplete
+                    chips
+                    :items="['Szabadon látogatható', 'Előzetes bejelentés alapján látogatható', 'Engedélyhez kötött', 'Vezetővel']"
+                  ></v-select>
+                </v-flex>
+              </v-layout>
+            </v-container>
+            <v-container>
+
+              <div class="content">
+                <span class="hljs-attr">Csatolmányok</span>
+                <input type="file">
+              </div>
+
+            </v-container>
+            <small>*kötelezően kitöltendő mezők</small>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="green darken-1" flat="flat" @click.native="dialog = false">Disagree</v-btn>
-            <v-btn color="green darken-1" flat="flat" @click.native="dialog = false">Agree</v-btn>
+            <v-btn color="green darken-1" flat="flat" @click.native="dialog = false">Mentés</v-btn>
+            <v-btn color="green darken-1" flat="flat" @click.native="dialog = false">Visszavonás</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
     </v-layout>
   </v-app>
-  <v-app id="modify">
-    <v-layout row justify-center>
-      <v-dialog v-model="dialog">
-        <div class="modal-mask">
-          <div class="modal-wrapper">
-            <div class="modal-container">
-              <div slot="modal-header" class="modal-header">
-                <h4 class="modal-title">"XY barlang adatlapjának szerkesztése"</h4>
-              </div>
-              <div slot="modal-body" class="modal-body"></div>
-              <div class="ui card">
-                <input type="text" class="modify" placeholder="Barlang neve">
-                <input type="number" class="modify" placeholder="1234567">
-                <input type="text" class="modify" placeholder="Szinonimák">
-                <input type="text" class="modify" placeholder="Barlang hosszabb szöveges leírása">
-                <input type="text" class="modify" placeholder="Megjegyzés">
-              </div>
-              <div class="ui card">
-                <div class="container">
-                  <span class="hljs-attr">Védettségi besorolás</span>
-                  <select name="vedett" id="vedett">
-                    <option value="1">Védett</option>
-                    <option value="2">Fokozottan védett</option>
-                    <option>...</option>
-                  </select>
-                </div>
-                <div class="container">
-                  <span class="hljs-attr">Látogathatóság</span>
-                  <select name="latogathato" id="latogathato">
-                    <option value="1">Szabadon</option>
-                    <option value="2">Vezetővel</option>
-                    <option value="3">...</option>
-                  </select>
-                </div>
-                <div class="container">
-                  <span class="hljs-attr">Illetékes nemzeti park igazgatóság</span>
-                  <select name="npi" id="npi">
-                    <option value="1">Balaton-felvidéki</option>
-                    <option value="2">Bükki</option>
-                    <option value="3">...</option>
-                  </select>
-                </div>
-              </div>
-              <div class="ui  card">
-                <div>
-                  <span class="hljs-attr">EOV koordináták</span>
-                  <input type="text" class="modify" placeholder="X">
-                  <input type="text" class="modify" placeholder="Y">
-                  <span class="hljs-attr">WGS84 koordináták</span>
-                  <input type="text" class="modify" placeholder="lambda">
-                  <input type="text" class="modify" placeholder="phi">
-                </div>
-              </div>
-              <div class="ui  card">
+</div>
 
-                <span class="hljs-attr">Kiterjedés</span>
-                <input type="text" class="modify" placeholder="magasság">
-                <input type="text" class="modify" placeholder="mélység">
-                <input type="text" class="modify" placeholder="vertikális kiterjedés">
-                <input type="text" class="modify" placeholder="hossz">
 
-              </div>
-              <div class="ui  card">
-                <div class="content">
-                  <span class="hljs-attr">Csatolmányok</span>
-                  <input type="file">
-                </div>
-              </div>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
-                <v-btn color="blue darken-1" flat @click.native="dialog = false">Save</v-btn>
-              </v-card-actions>
-              <div slot="modal-footer" class="modal-footer">
-                <button type="button" class="btn btn-default" @click="$emit('close')">Mégsem</button>
-                <button type="button" class="btn btn-success" @click="showCustomModal = false">Mentés</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </v-dialog>
-    </v-layout>
-  </v-app>
+<div class="ui  card">
+  <div>
+    <span class="hljs-attr">EOV koordináták</span>
+    <input type="text" class="modify" placeholder="X">
+    <input type="text" class="modify" placeholder="Y">
+    <span class="hljs-attr">WGS84 koordináták</span>
+    <input type="text" class="modify" placeholder="lambda">
+    <input type="text" class="modify" placeholder="phi">
+  </div>
+</div>
+<div class="ui  card">
+
+  <span class="hljs-attr">Kiterjedés</span>
+  <input type="text" class="modify" placeholder="magasság">
+  <input type="text" class="modify" placeholder="mélység">
+  <input type="text" class="modify" placeholder="vertikális kiterjedés">
+  <input type="text" class="modify" placeholder="hossz">
+
+</div>
+<div class="ui  card">
+  <div class="content">
+    <span class="hljs-attr">Csatolmányok</span>
+    <input type="file">
+  </div>
 </div>
 
 
