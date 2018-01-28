@@ -1,381 +1,201 @@
 <!DOCTYPE html>
 <html>
-
 <head>
+  <title>nonKarstic - Kezdőoldal</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+  <link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet">
   <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
-  <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
 
   <script src="https://cdn.jsdelivr.net/vue/1.0.28/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>
-
   <script type="text/javascript" src="http://cdn.jsdelivr.net/vue.table/1.5.3/vue-table.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
-
-  <title>nonKarstic</title>
-
-  <style type="text/css">
-    html,
-    body {
-      height: auto;
-      min-height: auto;
-    }
-
-    #app {
-      font-family: 'Avenir', Helvetica, Arial, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      color: #2c3e50;
-    }
-
-    .orange.glyphicon {
-      color: orange;
-    }
-
-    th.sortable {
-      color: #ec971f;
-    }
-
-    .modal-dialog {
-      position: relative;
-      margin-block-start: auto;
-      left: 0px;
-      right: 0px;
-      top: 0px;
-      bottom: 0px;
-    }
-
-    .modal-header, h3 {
-      font-size: 16px;
-      font-weight: 100;
-      margin: 0;
-      opacity: 0.85;
-      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=85)";
-      filter: alpha(opacity=85);
-      text-transform: initial;
-    }
-
-    .modal-content {
-      background: #fff;
-      border-radius: 2px;
-      font-family: "Avenir", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-      margin: 0 auto 15px;
-      max-height: 100%;
-      overflow: auto;
-      padding: 30px;
-    }
-
-    .modal-footer {
-      color: #22313f;
-      font-size: 12px;
-      margin: 15px 0 0;
-      zoom: 1;
-    }
-  </style>
 </head>
 
 <body>
+
 <!-- MENU -->
-<div class="ui inverted vertical masthead center aligned segment">
-  <div class="ui container">
-    <div class="ui large secondary inverted pointing menu">
-      <a class="brand" href="#">
-        <img src="logo.png" alt="logo" style="width:90px">
-      </a>
-      <a class="active item" href="index.html">NonKarstic</a>
-      <a class="item" href="probamap.html">Térkép</a>
-      <a class="item" href=nonKarstic.html>Rólunk</a>
-      <a class="item" href="probaform.html">Adatlap</a>
-      <div class="right item">
-        <a class="ui inverted button" href="login.html">Belépés</a>
-        <a class="ui inverted button" href="index.html">Kilépés</a>
-      </div>
-    </div>
-  </div>
+
+<div id="app">
+  <v-app>
+    <v-layout row child-flex wrap>
+      <v-toolbar dark>
+        <div>
+          <v-toolbar--icon>
+            <a class="brand" href="#">
+              <img src="logo.png" alt="logo" style="width:90px">
+            </a>
+          </v-toolbar--icon>
+
+          <v-btn class="active item" href="index.html">nonKarstic</v-btn>
+          <v-btn class="item" href="map.html">Térkép</v-btn>
+          <v-btn class="item" href="#">Rólunk</v-btn>
+      </v-toolbar>
 </div>
-
-<!-- FELSŐ SÁV -->
-<div id="section1" class="container-fluid">
-  <div id="nav" class="container-fluid">
-    <div class="ui container">
-      <div id="content" class="ui basic segment">
-        <h2 class="ui header">Nemkarsztos barlangok listája</h2>
-        <div class="ui grid">
-          <div class="ui left aligned nine wide column">
-            <div class="ui labeled icon input">
-              <div class="ui label">Keresés:</div>
-              <input v-model="searchFor" class="ui input" @keyup.enter="setFilter">
-            </div>
-            <button class="ui button primary" @click="setFilter">
-              <i class="search icon"></i>
-            </button>
-          </div>
-          <div class="ui right aligned seven wide column">
-            <button class="ui basic button" id="settingsBtn" data-toggle="modal" data-target="#settingsModal">
-              <i class="setting icon"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div style="flex-basis: 50%">
+  <v-toolbar dark>
+    <v-spacer></v-spacer>
+    <v-btn class="item" href="login.html">Belépés</v-btn>
+  </v-toolbar>
 </div>
+</v-layout>
 
-<!-- MODAL BEÁLLÍTÁSOK -->
-<div class="modal" id="settingsModal" tabindex="-1" role="application" aria-labelledby="settingsModal"
-     aria-hidden="true" style="overflow-y: scroll">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h3 class="modal-title">Beállítások</h3>
-    </div>
-    <div class="modal-body">
-      <div class="content ui form">
-        <div class="field">
-          <div class="ui checkbox">
-            <input type="checkbox" v-model="multiSort">
-            <label>Rendezés (use Alt+Click)</label>
-          </div>
+
+<v-content>
+  <section>
+    <v-parallax src="cave.jpg" height="600">
+      <v-layout column align-center justify-center class="white--text">
+        <img src="logo.png" alt="logo" height="200">
+        <h1 class="white--text mb-2 display-1 text-xs-center">
+          <div class="subheading mb-3 text-xs-center">Szakdolgozat</div>
+          <v-btn class="blue lighten-2 mt-5" dark large href="/pre-made-themes"> A projektről</v-btn>
+          <v-spacer></v-spacer>
+      </v-layout>
+    </v-parallax>
+  </section>
+
+  <section>
+    <v-layout
+      column
+      wrap
+      class="my-5"
+      align-center
+    >
+      <v-flex xs12 sm4 class="my-3">
+        <div class="text-xs-center">
+          <h2 class="headline">Magyarország nemkarsztos barlangjai</h2>
+          <span class="subheading">                Nyilvántartási rendszer              </span>
         </div>
-        <div class="ui divider"></div>
-        <div class="field">
-          <label>Oldalanként</label>
-          <select class="ui simple dropdown" v-model="perPage">
-            <option value=10>10</option>
-            <option value=15>15</option>
-            <option value=20>20</option>
-            <option value=25>25</option>
-          </select>
+
+      </v-flex>
+      <v-flex xs12>
+        <v-container grid-list-xl>
+          <v-layout row wrap align-center>
+            <v-flex xs12 md4>
+              <v-card class="elevation-0 transparent">
+
+                <v-card-title primary-title class="layout justify-center">
+                  <div class="headline text-xs-center">Térképes megjelenítés</div>
+                </v-card-title>
+                <v-card-text>
+                  Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
+                  Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                  Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.
+                </v-card-text>
+              </v-card>
+            </v-flex>
+            <v-flex xs12 md4>
+              <v-card class="elevation-0 transparent">
+
+                <v-card-title primary-title class="layout justify-center">
+                  <div class="headline">Adminfelület</div>
+                </v-card-title>
+                <v-card-text>
+                  Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
+                  Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                  Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.
+                </v-card-text>
+              </v-card>
+            </v-flex>
+            <v-flex xs12 md4>
+              <v-card class="elevation-0 transparent">
+
+                <v-card-title primary-title class="layout justify-center">
+                  <div class="headline text-xs-center">Korszerű adatbázis</div>
+                </v-card-title>
+                <v-card-text>
+                  Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
+                  Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                  Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.
+                </v-card-text>
+              </v-card>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-flex>
+    </v-layout>
+  </section>
+
+  <section>
+    <v-container grid-list-xl>
+      <v-layout row wrap justify-center class="my-5">
+        <v-flex xs12 sm4>
+          <v-card class="elevation-0 transparent">
+            <v-card-title primary-title class="layout justify-center">
+              <div class="headline">Rólunk</div>
+            </v-card-title>
+            <v-card-text>
+              Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
+              Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+              Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.
+            </v-card-text>
+          </v-card>
+        </v-flex>
+        <v-flex xs12 sm4 offset-sm1>
+          <v-card class="elevation-0 transparent">
+            <v-card-title primary-title class="layout justify-center">
+              <div class="headline">Elérhetőség</div>
+            </v-card-title>
+            <v-list class="transparent">
+              <v-list-tile>
+                <v-list-tile-action>
+                  <v-icon class="gray--text text--lighten">phone</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                  <v-list-tile-title>+36305406575</v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+              <v-list-tile>
+                <v-list-tile-action>
+                  <v-icon class="gray--text text--lighten">székhely</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                  <v-list-tile-title> Budapest, HU</v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+
+            </v-list>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </section>
+
+  <v-footer dark>
+    <v-layout row wrap flex-wrap>
+      <v-flex xs10>
+        <div class="white--text ml-3">Készítette:
+          <a class="white--text" href="https://github.com/tafcica">John Júlia</a>
         </div>
-        <div class="ui fluid card">
-          <div class="content">
-            <div v-for="field in fields" class="field">
-              <div class="ui checkbox">
-                <input type="checkbox" v-model="field.visible">
-                <label>{{ field.title == '' ? field.name.replace('__', '') : field.title | capitalize}}</label>
-              </div>
-            </div>
-          </div>
+      </v-flex>
+      <v-flex xs2>
+        <div class="white--text ml-3">
+          <a class="white--text" href="#" target="_blank">nonKarstic</a>
         </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <div class="actions">
-        <button type="submit" class="btn btn-success">OK</button>
-      </div>
-    </div>
-  </div>
+      </v-flex>
+    </v-layout>
+  </v-footer>
+</v-content>
+</v-app>
 </div>
-</div>
-
-<!-- TÁBLÁZAT -->
-<div id="section2" class="container-fluid" style="padding-top:30px;padding-bottom:30px">
-  <table>
-    <div id="app">
-      <div id="table-wrapper" class="ui container">
-
-        <vuetable ref="vuetable"
-                  api-url="https://vuetable.ratiw.net/api/users"
-                  :fields="fields"
-                  :sort-order="sortOrder"
-                  :css="css.table"
-                  pagination-path=""
-                  :per-page="7"
-                  @vuetable:pagination-data="onPaginationData"
-                  @vuetable:loading="onLoading"
-                  @vuetable:loaded="onLoaded"
-        >
-          <template slot="actions" scope="props">
-
-            <div id="bapp" class="table-button-container">
-              <button id="show-modal" class="btn btn-warning btn-sm" @click="showModal = true">
-                <span class="glyphicon glyphicon-pencil"></span>
-              </button>&nbsp;&nbsp;
-
-              <button class="btn btn-danger btn-sm" @click="deleteRow(props.rowData)">
-                <span class="glyphicon glyphicon-trash"></span>
-              </button>&nbsp;&nbsp;
-            </div>
-          </template>
-        </vuetable>
-        <vuetable-pagination ref="pagination"
-                             :css="css.pagination"
-                             @vuetable-pagination:change-page="onChangePage"
-        ></vuetable-pagination>
-      </div>
-    </div>
-  </table>
-</div>
-
-<!-- TÁBLÁZAT MODAL -->
-
-<script type="text/x-template" id="modal-template">
-  <transition name="modal">
-    <div class="modal-mask">
-      <div class="modal-wrapper">
-        <div class="modal-container">
-  <div slot="modal-header" class="modal-header">
-    <h4 class="modal-title">"XY barlang adatlapjának szerkesztése"</h4>
-  </div>
-  <div slot="modal-body" class="modal-body"></div>
-  <div class="ui card">
-    <input type="text" class="modify" placeholder="Barlang neve">
-    <input type="number" class="modify" placeholder="1234567">
-    <input type="text" class="modify" placeholder="Szinonimák">
-    <input type="text" class="modify" placeholder="Barlang hosszabb szöveges leírása">
-    <input type="text" class="modify" placeholder="Megjegyzés">
-  </div>
-  <div class="ui card">
-    <div class="container">
-      <span class="hljs-attr">Védettségi besorolás</span>
-      <select name="vedett" id="vedett">
-        <option value="1">Védett</option>
-        <option value="2">Fokozottan védett</option>
-        <option>...</option>
-      </select>
-    </div>
-    <div class="container">
-      <span class="hljs-attr">Látogathatóság</span>
-      <select name="latogathato" id="latogathato">
-        <option value="1">Szabadon</option>
-        <option value="2">Vezetővel</option>
-        <option value="3">...</option>
-      </select>
-    </div>
-    <div class="container">
-      <span class="hljs-attr">Illetékes nemzeti park igazgatóság</span>
-      <select name="npi" id="npi">
-        <option value="1">Balaton-felvidéki</option>
-        <option value="2">Bükki</option>
-        <option value="3">...</option>
-      </select>
-    </div>
-  </div>
-  <div class="ui  card">
-  <div>
-    <span class="hljs-attr">EOV koordináták</span>
-    <input type="text" class="modify" placeholder="X">
-    <input type="text" class="modify" placeholder="Y">
-    <span class="hljs-attr">WGS84 koordináták</span>
-    <input type="text" class="modify" placeholder="lambda">
-    <input type="text" class="modify" placeholder="phi">
-  </div>
-  </div>
-  <div class="ui  card">
-
-    <span class="hljs-attr">Kiterjedés</span>
-    <input type="text" class="modify" placeholder="magasság">
-    <input type="text" class="modify" placeholder="mélység">
-    <input type="text" class="modify" placeholder="vertikális kiterjedés">
-    <input type="text" class="modify" placeholder="hossz">
-
-  </div>
-  <div class="ui  card">
-    <div class="content">
-      <span class="hljs-attr">Csatolmányok</span>
-      <input type="file">
-    </div>
-  </div>
-  <div slot="modal-footer" class="modal-footer">
-    <button type="button" class="btn btn-default" @click="$emit('close')">Mégsem</button>
-    <button type="button" class="btn btn-success" @click="showCustomModal = false">Mentés</button>
-  </div>
-                    </div>
-        </div>
-    </div>
-  </transition>
-</script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.6/vue.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.1/axios.min.js"></script>
-<script src="https://unpkg.com/vuetable-2@1.6.0"></script>
-
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vuetify/dist/vuetify.js"></script>
 <script>
-  Vue.use(Vuetable)
-
   new Vue({
     el: '#app',
-    components: {
-      'vuetable-pagination': Vuetable.VuetablePagination
-    },
-    data: {
-      fields: [
-        {
-          name: 'name',
-          title: '<span class="orange glyphicon glyphicon-user"></span> Full Name',
-          sortField: 'name'
-        },
-        {
-          name: 'email',
-          title: 'Email',
-          sortField: 'email'
-        },
-        'birthdate', 'nickname',
-        {
-          name: 'gender',
-          title: 'Gender',
-          sortField: 'gender'
-        },
-        '__slot:actions'
-      ],
-      sortOrder: [
-        {field: 'name', direction: 'asc'}
-      ],
-      css: {
-        table: {
-          tableClass: 'table table-striped table-bordered table-hovered',
-          loadingClass: 'loading',
-          ascendingIcon: 'glyphicon glyphicon-chevron-up',
-          descendingIcon: 'glyphicon glyphicon-chevron-down',
-          handleIcon: 'glyphicon glyphicon-menu-hamburger',
-        },
-        pagination: {
-          infoClass: 'pull-left',
-          wrapperClass: 'vuetable-pagination pull-right',
-          activeClass: 'btn-primary',
-          disabledClass: 'disabled',
-          pageClass: 'btn btn-border',
-          linkClass: 'btn btn-border',
-          icons: {
-            first: '',
-            prev: '',
-            next: '',
-            last: '',
-          },
-        }
-      }
-    },
-    methods: {
-      onPaginationData (paginationData) {
-        this.$refs.pagination.setPaginationData(paginationData)
-      },
-      onChangePage (page) {
-        this.$refs.vuetable.changePage(page)
-      },
-      editRow(rowData){
-        alert('You clicked edit on' + JSON.stringify(rowData))
-      },
-      deleteRow(rowData){
-        alert('You clicked delete on' + JSON.stringify(rowData))
-      },
-      onLoading() {
-        console.log('loading... show your spinner here')
-      },
-      onLoaded() {
-        console.log('loaded! .. hide your spinner here')
+    data () {
+      return {
+        title: ' '
       }
     }
   })
-
-
 </script>
-
-
 </body>
-
 </html>
